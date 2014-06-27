@@ -12,7 +12,11 @@ Funcijos:
 ============
 
 Naudojimas:
+
 1. Atsisiuntimas
+
 2. chmod u+x ...
+
 3. Konfigūracija (su pavyzdžiais)
+
 4. Gero naudojimo!
