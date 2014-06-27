@@ -22,7 +22,7 @@
 #-----------------------------------------------------------------------------------
 
 grotuvas='mpv'							# video grotuvas
-url_base='http://www.lrt.lt/mediateka/tiesiogiai'		# URL iki kanalo
+lrt='http://www.lrt.lt/mediateka/tiesiogiai'		# URL iki kanalo
 
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# papildomi video grotuvo parametrai
  
@@ -41,13 +41,13 @@ case ${1} in
         echo ""
         ;;
     tv1|1)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${url_base}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv1 
+        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv1 
         ;;
     tv2|2)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${url_base}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2
+        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2
         ;;
     tv3|3)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${url_base}/lrt-lituanica | grep -oP 'rtmp\S+[a-z0-9]{32}')/world
+        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP 'rtmp\S+[a-z0-9]{32}')/world
         ;;
     *)
         echo "Nenurodytas kanalas!"
