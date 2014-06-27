@@ -25,10 +25,26 @@ grotuvas='mpv'							# video grotuvas
 lrt='http://www.lrt.lt/mediateka/tiesiogiai'		# URL iki kanalo
 
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# papildomi video grotuvo parametrai
+
+#-----------------------------------------------------------------------------------
+# Funkcija
+#-----------------------------------------------------------------------------------
+yra() {
+  if hash $1 2>/dev/null; then
+    return 1
+  else
+    return 0
+  fi
+}
  
 #-----------------------------------------------------------------------------------
 # Procedūra
 #-----------------------------------------------------------------------------------
+if [[ $(yra $grotuvas) == 0 ]]; then
+    echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."
+    exit
+fi
+
 case ${1} in
     -h|--help)
         echo "Naudojimas: ${0} [kanalas]"
@@ -63,4 +79,3 @@ esac
 # 1. Pasitikrinimą ar transliuojama (kartais netransliuojama internetu dėl autorinių teisių)
 # 2. Uždaryti terminalo langą sėkmingai paleidus kanalą? (&; disown; exit)
 # 3. Papildyti radijo kanalais
-# 4. Pasitikrinti ar pasirinktas grotuvas yra įdiegtas (hash arba which)
