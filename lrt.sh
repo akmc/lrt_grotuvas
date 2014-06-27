@@ -26,24 +26,11 @@ lrt='http://www.lrt.lt/mediateka/tiesiogiai'		# URL iki kanalo
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# papildomi video grotuvo parametrai
 
 #-----------------------------------------------------------------------------------
-# Funkcijos
-#-----------------------------------------------------------------------------------
-yra() {
-  if hash $1 2>/dev/null; then
-    return 1
-  else
-    return 0
-  fi
-}
- 
-#-----------------------------------------------------------------------------------
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
-if [[ $(yra $grotuvas) == 0 ]]; then
-    echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."
-    exit
-fi
-
+# Patikrina ar egzistuoja pasirinktas grotuvas. Jeigu ne tai praneša vartotojui apie tai ir baigia darbą kodu 1
+command -v ${grotuvas} >/dev/null 2>&1 || { echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."; exit 1; }
+ 
 case ${1} in
     -h|--help)
         echo "Naudojimas: ${0} [kanalas]"
