@@ -1,6 +1,5 @@
 #!/bin/bash
 #===================================================================================
-#
 #         FAILAS: lrt.sh
 #
 #     NAUDOJIMAS: Instrukcijos pateikimos faile SKAITYK.md
@@ -27,7 +26,7 @@ lrt='http://www.lrt.lt/mediateka/tiesiogiai'		# URL iki kanalo
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# papildomi video grotuvo parametrai
 
 #-----------------------------------------------------------------------------------
-# Funkcija
+# Funkcijos
 #-----------------------------------------------------------------------------------
 yra() {
   if hash $1 2>/dev/null; then
@@ -38,7 +37,7 @@ yra() {
 }
  
 #-----------------------------------------------------------------------------------
-# Procedūra
+# Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
 if [[ $(yra $grotuvas) == 0 ]]; then
     echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."
