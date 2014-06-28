@@ -20,11 +20,11 @@
 # Nustatymai
 #-----------------------------------------------------------------------------------
 
-grotuvas='mpv'							# video grotuvas
-lrt='http://www.lrt.lt/mediateka/tiesiogiai'			# URL iki kanalo
+grotuvas="mpv"                                    # video grotuvas
+lrt="http://www.lrt.lt/mediateka/tiesiogiai"			# URL iki kanalo
 # Vėliavėlės naudojamos, kai reikia atjungti grotuvą nuo terminalo
-v1=''
-v2=''
+v1=""
+v2=""
 
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# instrukcijos PASISKAITOME.md faile
 
@@ -75,22 +75,22 @@ case ${1} in
         echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
         ;;
     1|tv1|televizija)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/LTV1 ${v2}
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
         ;;
     2|tv2|kultura)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2 ${v2}
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP "rtmp\S+[a-z0-9]{32}")/ltv2 ${v2}
         ;;
     3|tv3|lituanica)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP 'rtmp\S+[a-z0-9]{32}')/world ${v2} 
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP "rtmp\S+[a-z0-9]{32}")/world ${v2} 
         ;;
     4|r1|radijas)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-radijas | grep -oP 'rtmp\S+[a-z0-9]{32}')/radio.mp3 ${v2}
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-radijas | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
         ;;
     5|r2|klasika)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-klasika | grep -oP 'rtmp\S+[a-z0-9]{32}')/radio.mp3 ${v2}
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-klasika | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
         ;;
     6|r3|opus)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP 'rtmp\S+[a-z0-9]{32}')/radio.mp3 ${v2}
+        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
         ;;
     *)
         echo "Nenurodytas kanalas!"
