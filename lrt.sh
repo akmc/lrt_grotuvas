@@ -25,6 +25,11 @@ lrt='http://www.lrt.lt/mediateka/tiesiogiai'			# URL iki kanalo
 
 # grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# instrukcijos PASISKAITOME.md faile
 
+# jei yra - nuskaityti naudotojo nustatymus iš ~/.lrtrc failo
+if [ -f ${HOME}/.lrtrc ]; then
+	source ${HOME}/.lrtrc
+fi
+
 #-----------------------------------------------------------------------------------
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
@@ -57,7 +62,8 @@ case ${1} in
         echo ""
         ;;
     1|tv1|televizija)
-        nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/LTV1 &
+	echo "Norėdami sustabdyti rodymą spauskite CRTL+C, arba uždarykite grotuvo langą."
+        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/LTV1 >/dev/null 2>&1
         ;;
     2|tv2|kultura)
         nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2 &
