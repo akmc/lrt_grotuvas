@@ -7,7 +7,7 @@
 #      APRAŠYMAS: Scenarijus groja LRT internetu transliuojamus kanalus Jūsų 
 #                 pasirinktame grotuve.
 #
-# PRIKLAUSOMYBĖS: curl, medija grotuvas.
+# PRIKLAUSOMYBĖS: curl, medija grotuvas, gnu coreutils
 #   REIKALAVIMAI: --- 
 #       AUTORIUS: AKMC komanda (GitHUB prisidėję asmenys)
 #      LICENCIJA: GPL v2
@@ -43,13 +43,13 @@ case ${1} in
         echo ""
         ;;
     tv1|1)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv1 
+        nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv1 &
         ;;
     tv2|2)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2
+        nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP 'rtmp\S+[a-z0-9]{32}')/ltv2 &
         ;;
     tv3|3)
-        ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP 'rtmp\S+[a-z0-9]{32}')/world
+        nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP 'rtmp\S+[a-z0-9]{32}')/world &
         ;;
     *)
         echo "Nenurodytas kanalas!"
@@ -63,5 +63,4 @@ esac
 # TODO
 #-----------------------------------------------------------------------------------
 # 1. Pasitikrinimą ar transliuojama (kartais netransliuojama internetu dėl autorinių teisių)
-# 2. Uždaryti terminalo langą sėkmingai paleidus kanalą? (&; disown; exit)
-# 3. Papildyti radijo kanalais
+# 2. Papildyti radijo kanalais
