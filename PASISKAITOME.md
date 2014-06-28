@@ -6,8 +6,9 @@ Tai paprastas scenarijus, skirtas groti Lietuvos radijo ir televizijos internetu
 ============
 
 Funkcijos:
+
 * Galimybė pasirinkti norimą kanalą
-* Galimybė nurodyti medija grotuvą
+* Galimybė nurodyti media grotuvą
  
 ===========
 
@@ -22,9 +23,6 @@ Kanalas turi būtinai nurodytas
 Naudojimas:
 
 1. Atsisiuntimas
-
 2. chmod u+x ...
-
-3. Konfigūracija (su pavyzdžiais)
-
+3. Konfigūracija (pavyzdys yra lrt.sh failo viršuje)
 4. Gero naudojimo!

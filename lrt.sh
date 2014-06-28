@@ -8,7 +8,6 @@
 #                 pasirinktame grotuve.
 #
 # PRIKLAUSOMYBĖS: curl, medija grotuvas, gnu coreutils
-#   REIKALAVIMAI: --- 
 #       AUTORIUS: AKMC komanda (GitHUB prisidėję asmenys)
 #      LICENCIJA: GPL v2
 #
@@ -20,13 +19,16 @@
 # Nustatymai
 #-----------------------------------------------------------------------------------
 
-grotuvas="mpv"                                    # video grotuvas
-lrt="http://www.lrt.lt/mediateka/tiesiogiai"			# URL iki kanalo
-# Vėliavėlės naudojamos, kai reikia atjungti grotuvą nuo terminalo
-v1=""
-v2=""
+grotuvas="mpv" # video grotuvas
+#grotuvas_param="--vf crop=1050:574:0:2 --deinterlace=yes" # instrukcijos PASISKAITOME.md faile
 
-# grotuvas_param='--vf crop=1050:574:0:2 --deinterlace=yes'	# instrukcijos PASISKAITOME.md faile
+#-----------------------------------------------------------------------------------
+# Po šitos linijos nerekomenduojama ką nors keisti
+#-----------------------------------------------------------------------------------
+
+lrt="http://www.lrt.lt/mediateka/tiesiogiai" # URL iki kanalo
+v1="" # lygus nohup jeigu yra naudojama -d/--detach
+v2="" # lygus & jeigu yra naudojama -d/--detach
 
 # jei yra - nuskaityti naudotojo nustatymus iš ~/.lrtrc failo
 if [ -f ${HOME}/.lrtrc ]; then
@@ -37,13 +39,12 @@ fi
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
 
-# Patikrinama ar yra įdiegtas nurodytas grotuvas. Jei neįdiegtas - nutraukiamas scenarijus ir pranešama vartotojui
-command -v ${grotuvas} >/dev/null 2>&1 || { echo "Nerasta programa \"${grotuvas}\" ! Patikrinkite konfiguraciją ${0} failo viršuje."; exit 1; }
-# Patikrinama ar yra įdiegtas curl. Jei neįdiegtas - nutraukiamas scenarijus ir pranešama vartotojui
-command -v curl >/dev/null 2>&1 || { echo "Nerasta programa \"curl\"! Ji privaloma scenarijaus veikimui. Prašome įsidiegti ir bandyti dar kartą."; exit 1; }
-# Patikrinama ar yra įdiegtas nohup. Jei neįdiegtas - nutraukiamas scenarijus ir pranešama vartotojui
-command -v nohup >/dev/null 2>&1 || { echo "Nerasta programa \"nohup\"! Ji privaloma scenarijaus veikimui. Prašome įsidiegti ir bandyti dar kartą."; exit 1; }
- 
+# Patikrinama ar yra programos, kurios yra privalomos scenarijui
+if [ $(command -v ${grotuvas} curl nohup grep | wc -l) -lt 4 ]; then 
+  echo "Nerasta ${grotuvas}, curl, nohup arba grep ! Patikrinkite konfiguraciją ${0} failo viršuje"
+  exit 1
+fi
+
 # Patikrinam ir nustatom papildomus argumentus grotuvui jeigu vartotojas nori jį atjungti nuo terminalo
 if [ "${2}" == "-d" ] || [ "${2}" == "--detach" ]; then
   v1="nohup"
@@ -93,7 +94,7 @@ case ${1} in
         ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
         ;;
     *)
-        echo "Nenurodytas kanalas!"
+        echo "Nenurodytas ar neegzistuojantis kanalas!"
         echo ""
         echo "Pagalba: ${0} -h/--help"
         ;;
@@ -106,3 +107,4 @@ esac
 # 2. Langas radijo transliacijai (kad išsijungti būtų galima žmoniškai :))
 # 3. Mintis - gal būtų šaunu rodyti statinį radijo kanalo paveiksliuką audio grojimo metu (sumixuoti skirtingus video ir audio kanalaus)
 # 4. Pakeist -h/--help ir -d/--detach pavadinimus į lietuviškus
+# 5. Perkelti -h/--help ir -d/--detach į pirmą argumentą, o kanalą - į antrą
