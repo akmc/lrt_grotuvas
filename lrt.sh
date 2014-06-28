@@ -32,7 +32,7 @@ lrt='http://www.lrt.lt/mediateka/tiesiogiai'			# URL iki kanalo
 # Patikrinama ar yra įdiegtas nurodytas grotuvas. Jei neįdiegtas - nutraukiamas scenarijus ir pranešama vartotojui
 command -v ${grotuvas} >/dev/null 2>&1 || { echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."; exit 1; }
 # Patikrinama ar yra įdiegtas curl. Jei neįdiegtas - nutraukiamas scenarijus ir pranešama vartotojui
-command -v curl >/dev/null 2>&1 || { echo "Nerastas grotuvas! Patikrinkite konfiguraciją ${0} failo viršuje."; exit 1; }
+command -v curl >/dev/null 2>&1 || { echo "Nerasta programa \"curl\"! Ji privaloma scenarijaus veikimui. Prašome įsidiegti ir bandyti dar kartą."; exit 1; }
  
 case ${1} in
     -h|--help)
