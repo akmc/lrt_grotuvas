@@ -20,7 +20,7 @@
 #-----------------------------------------------------------------------------------
 
 grotuvas="mpv" # video grotuvas
-#grotuvas_param="--vf crop=1050:574:0:2 --deinterlace=yes" # instrukcijos PASISKAITOME.md faile
+grotuvas_param="--vf crop=1050:574:0:2 --deinterlace=yes" # instrukcijos PASISKAITOME.md faile
 
 #-----------------------------------------------------------------------------------
 # Po šitos linijos nerekomenduojama ką nors keisti
@@ -34,6 +34,8 @@ v2="" # lygus & jeigu yra naudojama -d/--detach
 if [ -f ${HOME}/.lrtrc ]; then
 	source ${HOME}/.lrtrc
 fi
+
+nepri="autorių\|netransliuojama\|pabaiga"
 
 #-----------------------------------------------------------------------------------
 # Pagrindinė scenarijaus dalis
@@ -76,22 +78,52 @@ case ${1} in
         echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
         ;;
     1|tv1|televizija)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        if [ $(curl -s ${lrt}/lrt-televizija | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     2|tv2|kultura)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP "rtmp\S+[a-z0-9]{32}")/ltv2 ${v2}
+        if [ $(curl -s ${lrt}/lrt-kultura | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     3|tv3|lituanica)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP "rtmp\S+[a-z0-9]{32}")/world ${v2} 
+        if [ $(curl -s ${lrt}/lrt-lituanica | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     4|r1|radijas)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-radijas | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
+        if [ $(curl -s ${lrt}/lrt-radijas | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-radijas | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     5|r2|klasika)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-klasika | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
+        if [ $(curl -s ${lrt}/lrt-klasika | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-klasika | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     6|r3|opus)
-        ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP "rtmp\S+[a-z0-9]{32}")/radio.mp3 ${v2}
+        if [ $(curl -s ${lrt}/lrt-opus | grep ${nepri} | wc -l) -eq 1 ]; then
+          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+          exit 1
+        else
+          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+        fi
         ;;
     *)
         echo "Nenurodytas ar neegzistuojantis kanalas!"
@@ -103,8 +135,7 @@ esac
 #-----------------------------------------------------------------------------------
 # TODO
 #-----------------------------------------------------------------------------------
-# 1. Pasitikrinimą ar transliuojama (kartais netransliuojama internetu dėl autorinių teisių. galima gaudyt tekstą html'e, arba grep statusą "null")
-# 2. Langas radijo transliacijai (kad išsijungti būtų galima žmoniškai :))
-# 3. Mintis - gal būtų šaunu rodyti statinį radijo kanalo paveiksliuką audio grojimo metu (sumixuoti skirtingus video ir audio kanalaus)
-# 4. Pakeist -h/--help ir -d/--detach pavadinimus į lietuviškus
-# 5. Perkelti -h/--help ir -d/--detach į pirmą argumentą, o kanalą - į antrą
+# 1. Langas radijo transliacijai (kad išsijungti būtų galima žmoniškai :))
+# 2. Mintis - gal būtų šaunu rodyti statinį radijo kanalo paveiksliuką audio grojimo metu (sumixuoti skirtingus video ir audio kanalaus)
+# 3. Pakeist -h/--help ir -d/--detach pavadinimus į lietuviškus
+# 4. Perkelti -h/--help ir -d/--detach į pirmą argumentą, o kanalą - į antrą
