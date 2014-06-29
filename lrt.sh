@@ -38,6 +38,17 @@ fi
 nepri="autorių\|netransliuojama\|pabaiga"
 
 #-----------------------------------------------------------------------------------
+# Funkcijos
+#-----------------------------------------------------------------------------------
+paleisti () {
+  if [ $(curl -s ${lrt}/$1 | grep ${nepri} | wc -l) -eq 1 ]; then
+    echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
+    exit 1
+  else
+    ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+  fi
+}
+#-----------------------------------------------------------------------------------
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
 
@@ -78,52 +89,22 @@ case ${1} in
         echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
         ;;
     1|tv1|televizija)
-        if [ $(curl -s ${lrt}/lrt-televizija | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-televizija | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-televizija
         ;;
     2|tv2|kultura)
-        if [ $(curl -s ${lrt}/lrt-kultura | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-kultura | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-kultura
         ;;
     3|tv3|lituanica)
-        if [ $(curl -s ${lrt}/lrt-lituanica | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-lituanica | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-lituanica
         ;;
     4|r1|radijas)
-        if [ $(curl -s ${lrt}/lrt-radijas | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-radijas | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-radijas
         ;;
     5|r2|klasika)
-        if [ $(curl -s ${lrt}/lrt-klasika | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-klasika | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-klasika
         ;;
     6|r3|opus)
-        if [ $(curl -s ${lrt}/lrt-opus | grep ${nepri} | wc -l) -eq 1 ]; then
-          echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-          exit 1
-        else
-          ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/lrt-opus | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
-        fi
+        paleisti lrt-opus
         ;;
     *)
         echo "Nenurodytas ar neegzistuojantis kanalas!"
