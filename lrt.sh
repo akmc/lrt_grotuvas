@@ -20,7 +20,7 @@
 #-----------------------------------------------------------------------------------
 
 grotuvas="mpv" # video grotuvas
-grotuvas_param="--vf crop=1050:574:0:2 --deinterlace=yes" # instrukcijos PASISKAITOME.md faile
+#grotuvas_param="--vf crop=1050:574:0:2 --deinterlace=yes" # instrukcijos PASISKAITOME.md faile
 
 #-----------------------------------------------------------------------------------
 # Po šitos linijos nerekomenduojama ką nors keisti
