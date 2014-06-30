@@ -27,9 +27,7 @@ grotuvas="mpv" # video grotuvas
 #-----------------------------------------------------------------------------------
 
 lrt="http://www.lrt.lt/mediateka/tiesiogiai" # URL iki kanalo
-v1="" # lygus nohup jeigu yra naudojama -d/--detach
-v2="" # lygus & jeigu yra naudojama -d/--detach
-
+d=0
 # jei yra - nuskaityti naudotojo nustatymus iš ~/.lrtrc failo
 if [ -f ${HOME}/.lrtrc ]; then
   source ${HOME}/.lrtrc
@@ -46,7 +44,11 @@ paleisti () {
     echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
     exit 1
   else
-    ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 ${v2}
+    if [ $d -eq 1 ]; then
+      nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 &
+    else
+      ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2
+    fi
   fi
 }
 #-----------------------------------------------------------------------------------
@@ -61,8 +63,7 @@ fi
 
 # Patikrinam ir nustatom papildomus argumentus grotuvui jeigu vartotojas nori jį atjungti nuo terminalo
 if [ "${2}" == "-d" ] || [ "${2}" == "--detach" ]; then
-  v1="nohup"
-  v2="&"
+  d=1
   echo "Media grotuvas bus atjungtas nuo terminalo!"
 fi
 
