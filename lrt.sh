@@ -46,7 +46,7 @@ paleisti () {
     echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
     exit 1
   else
-    ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/LTV1 ${v2}
+    ${v1} ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 ${v2}
   fi
 }
 #-----------------------------------------------------------------------------------
@@ -90,22 +90,22 @@ case ${1} in
     echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
     ;;
   1|tv1|televizija)
-    paleisti lrt-televizija
+    paleisti lrt-televizija LTV1
     ;;
   2|tv2|kultura)
-    paleisti lrt-kultura
+    paleisti lrt-kultura ltv2
     ;;
   3|tv3|lituanica)
-    paleisti lrt-lituanica
+    paleisti lrt-lituanica world
     ;;
   4|r1|radijas)
-    paleisti lrt-radijas
+    paleisti lrt-radijas radio.mp3
     ;;
   5|r2|klasika)
-    paleisti lrt-klasika
+    paleisti lrt-klasika radio.mp3
     ;;
   6|r3|opus)
-    paleisti lrt-opus
+    paleisti lrt-opus radio.mp3
     ;;
   *)
     echo "Nenurodytas ar neegzistuojantis kanalas!"
