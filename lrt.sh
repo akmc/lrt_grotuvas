@@ -11,8 +11,8 @@
 #       AUTORIUS: AKMC komanda (GitHUB prisidėję asmenys)
 #      LICENZIJA: GPL v2
 #
-#        VERSIJA: 0.alpha
-#        SUKURTA: 2014-06-28
+#        VERSIJA: 0.1
+#        IŠLEISTA: 2014-06-30
 #===================================================================================
 
 #-----------------------------------------------------------------------------------
@@ -32,10 +32,11 @@ v2="" # lygus & jeigu yra naudojama -d/--detach
 
 # jei yra - nuskaityti naudotojo nustatymus iš ~/.lrtrc failo
 if [ -f ${HOME}/.lrtrc ]; then
-	source ${HOME}/.lrtrc
+  source ${HOME}/.lrtrc
 fi
 
-nepri="autorių\|netransliuojama\|pabaiga"
+# Kokie žodžiai rodo, kad tas kanalas nėra transliuojamas?
+nepri="autorių\|netransliuojama\|pabaiga" 
 
 #-----------------------------------------------------------------------------------
 # Funkcijos
@@ -66,51 +67,51 @@ if [ "${2}" == "-d" ] || [ "${2}" == "--detach" ]; then
 fi
 
 case ${1} in
-    -h|--help)
-        echo "Naudojimas: ${0} [kanalas] [-d/--detach]"
-        echo ""
-        echo "TV kanalai:"
-        echo " 1 | tv1 | televizija = LRT Televizija"
-        echo " 2 | tv2 | kultura = LRT Kultūra"
-        echo " 3 | tv3 | lituanica = LRT Lituanika"
-        echo ""
-        echo "Radijo kanalai:"
-        echo " 4 | r1 | radijas = LRT Radijas"
-        echo " 5 | r2 | klasika = LRT Klasika"
-        echo " 6 | r3 | opus = LRT Klasika"
-        echo ""
-        echo "LRT televizijai rodyti skirtų komandų pavyzdžiai:"
-        echo "    Komanda: \"sh ${0} 1\""
-        echo " arba"
-        echo "    Komanda: \"sh ${0} tv1\""
-        echo " arba"
-        echo "    Komanda: \"sh ${0} televizija\""
-        echo ""
-        echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
-        ;;
-    1|tv1|televizija)
-        paleisti lrt-televizija
-        ;;
-    2|tv2|kultura)
-        paleisti lrt-kultura
-        ;;
-    3|tv3|lituanica)
-        paleisti lrt-lituanica
-        ;;
-    4|r1|radijas)
-        paleisti lrt-radijas
-        ;;
-    5|r2|klasika)
-        paleisti lrt-klasika
-        ;;
-    6|r3|opus)
-        paleisti lrt-opus
-        ;;
-    *)
-        echo "Nenurodytas ar neegzistuojantis kanalas!"
-        echo ""
-        echo "Pagalba: ${0} -h/--help"
-        ;;
+  -h|--help)
+    echo "Naudojimas: ${0} [kanalas] [-d/--detach]"
+    echo ""
+    echo "TV kanalai:"
+    echo " 1 | tv1 | televizija = LRT Televizija"
+    echo " 2 | tv2 | kultura = LRT Kultūra"
+    echo " 3 | tv3 | lituanica = LRT Lituanika"
+    echo ""
+    echo "Radijo kanalai:"
+    echo " 4 | r1 | radijas = LRT Radijas"
+    echo " 5 | r2 | klasika = LRT Klasika"
+    echo " 6 | r3 | opus = LRT Klasika"
+    echo ""
+    echo "LRT televizijai rodyti skirtų komandų pavyzdžiai:"
+    echo "    Komanda: \"sh ${0} 1\""
+    echo " arba"
+    echo "    Komanda: \"sh ${0} tv1\""
+    echo " arba"
+    echo "    Komanda: \"sh ${0} televizija\""
+    echo ""
+    echo "Jeigu nenorite gauti grotuvo išeities teksto tai naudokite -d/--detach vėliavėlę."
+    ;;
+  1|tv1|televizija)
+    paleisti lrt-televizija
+    ;;
+  2|tv2|kultura)
+    paleisti lrt-kultura
+    ;;
+  3|tv3|lituanica)
+    paleisti lrt-lituanica
+    ;;
+  4|r1|radijas)
+    paleisti lrt-radijas
+    ;;
+  5|r2|klasika)
+    paleisti lrt-klasika
+    ;;
+  6|r3|opus)
+    paleisti lrt-opus
+    ;;
+  *)
+    echo "Nenurodytas ar neegzistuojantis kanalas!"
+    echo ""
+    echo "Pagalba: ${0} -h/--help"
+    ;;
 esac
 
 #-----------------------------------------------------------------------------------
