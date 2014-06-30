@@ -9,7 +9,7 @@
 #
 # PRIKLAUSOMYBĖS: curl, medija grotuvas, gnu coreutils
 #       AUTORIUS: AKMC komanda (GitHUB prisidėję asmenys)
-#      LICENCIJA: GPL v2
+#      LICENZIJA: GPL v2
 #
 #        VERSIJA: 0.alpha
 #        SUKURTA: 2014-06-28
