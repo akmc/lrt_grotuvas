@@ -44,6 +44,7 @@ paleisti () {
     echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
     exit 1
   else
+    echo "Paleidžiama transliacija"
     if [ $d -eq 1 ]; then
       nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 &
     else
@@ -55,6 +56,12 @@ paleisti () {
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
 
+wget --timeout=15 --spider ${lrt} &>/dev/null
+if [ $? -ne 0 ]; then
+  echo "${lrt} nėra pasiekiamas todėl nutraukiamas darbas!"
+  exit 1
+fi
+
 # Patikrinama ar yra programos, kurios yra privalomos scenarijui
 if [ $(command -v ${grotuvas} curl nohup grep | wc -l) -lt 4 ]; then 
   echo "Nerasta ${grotuvas}, curl, nohup arba grep ! Patikrinkite konfiguraciją ${0} failo viršuje"
@@ -64,7 +71,7 @@ fi
 # Patikrinam ir nustatom papildomus argumentus grotuvui jeigu vartotojas nori jį atjungti nuo terminalo
 if [ "${2}" == "-d" ] || [ "${2}" == "--detach" ]; then
   d=1
-  echo "Media grotuvas bus atjungtas nuo terminalo!"
+  echo "Media grotuvas bus atjungtas nuo terminalo"
 fi
 
 case ${1} in
