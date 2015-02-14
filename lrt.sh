@@ -2,7 +2,7 @@
 #===================================================================================
 #         FAILAS: lrt.sh
 #
-#     NAUDOJIMAS: Instrukcijos pateikimos faile SKAITYK.md
+#     NAUDOJIMAS: Instrukcijos pateikimos faile PASISKAITOM.md
 #
 #      APRAŠYMAS: Scenarijus groja LRT internetu transliuojamus kanalus Jūsų 
 #                 pasirinktame grotuve.
