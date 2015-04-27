@@ -33,25 +33,18 @@ if [ -f ${HOME}/.lrtrc ]; then
   source ${HOME}/.lrtrc
 fi
 
-# Kokie žodžiai rodo, kad tas kanalas nėra transliuojamas?
-nepri="autorių\|netransliuojama\|pabaiga" 
-
 #-----------------------------------------------------------------------------------
 # Funkcijos
 #-----------------------------------------------------------------------------------
 paleisti () {
-  if [ $(curl -s ${lrt}/$1 | grep ${nepri} | wc -l) -eq 1 ]; then
-    echo "Lrt programa netransliuojama dėl autorių teisių arba dėl kitokių priežaščių. Nutraukiamas darbas"
-    exit 1
+  echo "Paleidžiama transliacija"
+  if [ $d -eq 1 ]; then
+    nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 &
   else
-    echo "Paleidžiama transliacija"
-    if [ $d -eq 1 ]; then
-      nohup ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2 &
-    else
-      ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2
-    fi
+    ${grotuvas} ${grotuvas_param} $(curl -s ${lrt}/$1 | grep -oP "rtmp\S+[a-z0-9]{32}")/$2
   fi
 }
+
 #-----------------------------------------------------------------------------------
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
