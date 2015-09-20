@@ -49,15 +49,16 @@ paleisti () {
 # Pagrindinė scenarijaus dalis
 #-----------------------------------------------------------------------------------
 
-wget --timeout=15 --spider ${lrt} &>/dev/null
-if [ $? -ne 0 ]; then
-  echo "${lrt} nėra pasiekiamas todėl nutraukiamas darbas!"
-  exit 1
-fi
-
 # Patikrinama ar yra programos, kurios yra privalomos scenarijui
 if [ $(command -v ${grotuvas} curl nohup grep wget | wc -l) -lt 5 ]; then 
   echo "Nerasta ${grotuvas}, curl, nohup, grep arba wget! Patikrinkite konfiguraciją ${0} failo viršuje"
+  exit 1
+fi
+
+
+wget --timeout=15 --spider ${lrt} &>/dev/null
+if [ $? -ne 0 ]; then
+  echo "${lrt} nėra pasiekiamas todėl nutraukiamas darbas!"
   exit 1
 fi
 
